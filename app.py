@@ -6,14 +6,6 @@ import json
 
 
 st.title('Análisis de Sentimiento')
-
-
-with open('graficos.json') as source:
-    animation = json.load(source)
-
-st_lottie(animation, width=350)
-
-
 st.subheader("Por favor escribe en el campo de texto la frase que deseas analizar")
 
 translator = Translator()
@@ -29,11 +21,15 @@ with st.sidebar:
     """)
 
 
+def cargar_lottie(ruta_json):
+    with open(ruta_json, "r", encoding="utf-8") as source:
+        return json.load(source)
+
+
 with st.expander('Analizar texto'):
     text = st.text_input('Escribe por favor: ')
 
     if text:
-
         translation = translator.translate(text, src="es", dest="en")
         trans_text = translation.text
 
@@ -45,9 +41,16 @@ with st.expander('Analizar texto'):
         st.write('Polarity: ', polarity)
         st.write('Subjectivity: ', subjectivity)
 
+        # Selección del archivo JSON según el sentimiento
         if polarity > 0:
             st.write('Es un sentimiento Positivo')
+            archivo_json = 'Emoji - Happy.json'
         elif polarity < 0:
             st.write('Es un sentimiento Negativo')
+            archivo_json = 'sad.json'
         else:
             st.write('Es un sentimiento Neutral')
+            archivo_json = 'Error 404 - Facebook Style.json'
+
+        animation = cargar_lottie(archivo_json)
+        st_lottie(animation, width=350)
