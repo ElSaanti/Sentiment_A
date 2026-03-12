@@ -8,7 +8,7 @@ import json
 st.title('Análisis de Sentimiento')
 with open('graficos.json') as source:
     animation=json.load(source)
-    st.lottie(animation,width = 350)
+    st.lottie(animation,width = 150)
 st.subheader("Por favor escribe en el campo de texto la frase que deseas analizar")
 
 
